@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NASA Space Explorer | Home</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    animation: {
+                        'float': 'float 6s ease-in-out infinite',
+                        'pulse-glow': 'pulse-glow 2s ease-in-out infinite',
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translate3d(0,0,0)' },
+                            '50%': { transform: 'translate3d(0,-20px,0)' },
+                        },
+                        'pulse-glow': {
+                            '0%, 100%': { boxShadow: '0 0 20px rgba(59, 130, 246, 0.5)' },
+                            '50%': { boxShadow: '0 0 40px rgba(59, 130, 246, 0.8)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body class="bg-gradient-to-br from-black via-purple-900/50 to-blue-900/50 min-h-screen text-white font-sans overflow-x-hidden">
+
+    <!-- Navigation -->
+    <nav class="fixed top-0 w-full z-50 glass backdrop-blur-md border-b border-white/10">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex-shrink-0 font-bold text-2xl bg-gradient-to-r from-blue-400 to-purple-500 bg-clip-text text-transparent">
+                    NASA Explorer
+                </div>
+                <div class="hidden md:flex space-x-8">
+                    <a href="index.html" class="hover:text-blue-400 transition-all duration-300">Home</a>
+                    <a href="planets.html" class="hover:text-blue-400 transition-all duration-300">Planets</a>
+                    <a href="missions.html" class="hover:text-blue-400 transition-all duration-300">Missions</a>
+                    <a href="gallery.html" class="hover:text-blue-400 transition-all duration-300">Gallery</a>
+                    <a href="about.html" class="hover:text-blue-400 transition-all duration-300">About</a>
+                </div>
+                <button id="darkToggle" class="p-2 rounded-lg bg-white/10 hover:bg-white/20 transition-all duration-300">
+                    <span class="dark:hidden">🌙</span>
+                    <span class="hidden dark:inline">☀️</span>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Starfield Background -->
+    <canvas id="starsCanvas" class="fixed top-0 left-0 w-full h-full z-0 pointer-events-none"></canvas>
+
+    <!-- Hero Section -->
+    <section class="relative min-h-screen flex items-center justify-center pt-16 overflow-hidden">
+        <div class="parallax" data-speed="-0.5">
+            <div class="text-center max-w-4xl mx-auto px-4 z-10 relative">
+                <h1 class="text-5xl md:text-7xl font-bold mb-6 bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 bg-clip-text text-transparent animate-float">
+                    Explore the Universe
+                </h1>
+                <p class="text-xl md:text-2xl mb-8 opacity-90">
+                    Discover NASA's latest missions, stunning planetary images, and the wonders of space exploration.
+                </p>
+                <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                    <a href="#featured" class="px-8 py-4 bg-blue-600 hover:bg-blue-700 rounded-xl text-lg font-semibold transition-all duration-300 transform hover:scale-105 shadow-2xl hover:shadow-glow">
+                        Featured Content
+                    </a>
+                    <a href="gallery.html" class="px-8 py-4 border-2 border-blue-500 hover:bg-blue-500 rounded-xl text-lg font-semibold transition-all duration-300 transform hover:scale-105">
+                        View Gallery
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
+    </section>
+
+    <!-- Featured APOD -->
+    <section id="featured" class="py-24 px-4 max-w-7xl mx-auto">
+        <h2 class="text-4xl font-bold text-center mb-16 bg-gradient-to-r from-blue-400 to-purple-500 bg-clip-text text-transparent">
+            Astronomy Picture of the Day
+        </h2>
+        <div id="apodContainer" class="grid md:grid-cols-2 gap-12 items-center">
+            <!-- APOD content loaded via JS -->
+            <div class="space-y-6">
+                <h3 id="apodTitle" class="text-3xl font-bold"></h3>
+                <p id="apodExplanation" class="text-lg opacity-90"></p>
+                <p class="text-sm opacity-70" id="apodDate"></p>
+            </div>
+            <img id="apodImage" class="w-full rounded-2xl shadow-2xl animate-pulse-glow" alt="APOD">
+        </div>
+    </section>
+
+    <!-- Quick Links -->
+    <section class="py-24 px-4 bg-white/5 backdrop-blur-md">
+        <div class="max-w-7xl mx-auto">
+            <h2 class="text-4xl font-bold text-center mb-16 bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">
+                Dive Deeper
+            </h2>
+            <div class="grid md:grid-cols-3 gap-8">
+                <a href="planets.html" class="group p-10 rounded-3xl bg-white/10 hover:bg-white/20 backdrop-blur-md border border-white/20 transition-all duration-500 hover:scale-105 hover:shadow-2xl hover:shadow-blue-500/25">
+                    <div class="w-20 h-20 mx-auto mb-6 rounded-2xl bg-gradient-to-r from-blue-500 to-purple-500 group-hover:rotate-12 transition-transform duration-500 flex items-center justify-center">
+                        <span class="text-2xl">🪐</span>
+                    </div>
+                    <h3 class="text-2xl font-bold mb-4 text-center">Solar System</h3>
+                    <p class="text-center opacity-90">Explore planets and their unique features.</p>
+                </a>
+                <a href="missions.html" class="group p-10 rounded-3xl bg-white/10 hover:bg-white/20 backdrop-blur-md border border-white/20 transition-all duration-500 hover:scale-105 hover:shadow-2xl hover:shadow-green-500/25">
+                    <div class="w-20 h-20 mx-auto mb-6 rounded-2xl bg-gradient-to-r from-green-500 to-emerald-500 group-hover:rotate-12 transition-transform duration-500 flex items-center justify-center">
+                        <span class="text-2xl">🚀</span>
+                    </div>
+                    <h3 class="text-2xl font-bold mb-4 text-center">Missions</h3>
+                    <p class="text-center opacity-90">NASA's historic and ongoing missions.</p>
+                </a>
+                <a href="gallery.html" class="group p-10 rounded-3xl bg-white/10 hover:bg-white/20 backdrop-blur-md border border-white/20 transition-all duration-500 hover:scale-105 hover:shadow-2xl hover:shadow-purple-500/25">
+                    <div class="w-20 h-20 mx-auto mb-6 rounded-2xl bg-gradient-to-r from-purple-500 to-pink-500 group-hover:rotate-12 transition-transform duration-500 flex items-center justify-center">
+                        <span class="text-2xl">🖼️</span>
+                    </div>
+                    <h3 class="text-2xl font-bold mb-4 text-center">Image Gallery</h3>
+                    <p class="text-center opacity-90">Stunning images from space.</p>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="py-12 px-4 bg-black/50 border-t border-white/10">
+        <div class="max-w-7xl mx-auto text-center">
+            <p>&amp;copy; 2024 NASA Space Explorer. Built with NASA APIs. For demo purposes.</p>
+        </div>
+    </footer>
+
+    <script src="js/particles.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>

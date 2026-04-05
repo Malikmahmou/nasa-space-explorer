@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gallery | NASA Space Explorer</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {}
+            }
+        }
+    </script>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body class="bg-gradient-to-br from-black via-purple-900/50 to-blue-900/50 min-h-screen text-white font-sans overflow-x-hidden">
+
+    <nav class="fixed top-0 w-full z-50 glass backdrop-blur-md border-b border-white/10">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex-shrink-0 font-bold text-2xl bg-gradient-to-r from-blue-400 to-purple-500 bg-clip-text text-transparent">
+                    <a href="index.html">NASA Explorer</a>
+                </div>
+                <div class="hidden md:flex space-x-8">
+                    <a href="index.html" class="hover:text-blue-400 transition-all duration-300">Home</a>
+                    <a href="planets.html" class="hover:text-blue-400 transition-all duration-300">Planets</a>
+                    <a href="missions.html" class="hover:text-blue-400 transition-all duration-300">Missions</a>
+                    <a href="gallery.html" class="text-blue-400 font-semibold transition-all duration-300">Gallery</a>
+                    <a href="about.html" class="hover:text-blue-400 transition-all duration-300">About</a>
+                </div>
+                <button id="darkToggle" class="p-2 rounded-lg bg-white/10 hover:bg-white/20 transition-all duration-300">
+                    <span class="dark:hidden">🌙</span>
+                    <span class="hidden dark:inline">☀️</span>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <canvas id="starsCanvas" class="fixed top-0 left-0 w-full h-full z-0 pointer-events-none"></canvas>
+
+    <!-- Gallery Hero -->
+    <section class="relative pt-32 pb-24 text-center">
+        <div class="max-w-4xl mx-auto px-4">
+            <h1 class="text-5xl md:text-7xl font-bold mb-6 bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">
+                Space Gallery
+            </h1>
+            <p class="text-xl md:text-2xl opacity-90">
+                Stunning images from NASA missions and telescopes
+            </p>
+        </div>
+    </section>
+
+    <!-- Gallery Controls -->
+    <div class="sticky top-20 z-30 px-4 mb-8">
+        <div class="max-w-7xl mx-auto flex flex-wrap gap-4 justify-center">
+            <button id="apodBtn" class="px-6 py-3 bg-blue-600/80 hover:bg-blue-500 rounded-xl font-semibold transition-all duration-300 backdrop-blur-md border border-blue-400/50">
+                APOD Archive
+            </button>
+            <button id="marsBtn" class="px-6 py-3 bg-red-600/80 hover:bg-red-500 rounded-xl font-semibold transition-all duration-300 backdrop-blur-md border border-red-400/50">
+                Mars Rover
+            </button>
+            <button id="hubbleBtn" class="px-6 py-3 bg-purple-600/80 hover:bg-purple-500 rounded-xl font-semibold transition-all duration-300 backdrop-blur-md border border-purple-400/50">
+                Hubble Deep Field
+            </button>
+        </div>
+    </div>
+
+    <!-- Gallery Grid -->
+    <section class="px-4 pb-24">
+        <div id="galleryGrid" class="max-w-7xl mx-auto gallery-grid gap-6 [>*]:break-inside-avoid [>*:hover]:scale-[1.02] transition-all duration-500">
+            <!-- Images loaded dynamically -->
+            <div class="loading col-span-full text-center py-20 text-2xl">
+                Select a gallery or scroll to explore...
+            </div>
+        </div>
+    </section>
+
+    <!-- Image Modal -->
+    <div id="imageModal" class="fixed inset-0 z-50 hidden bg-black/90 backdrop-blur-md flex items-center justify-center p-8">
+        <button class="absolute top-8 right-8 text-3xl hover:text-white transition-colors" id="closeModal">&amp;times;</button>
+        <img id="modalImage" class="max-h-[90vh] max-w-[90vw] object-contain rounded-2xl shadow-2xl animate-pulse-glow" alt="Full size">
+        <div id="modalInfo" class="absolute bottom-12 left-1/2 transform -translate-x-1/2 bg-white/10 backdrop-blur-md rounded-2xl p-6 max-w-2xl mx-4 text-center border border-white/20">
+            <h3 id="modalTitle" class="text-2xl font-bold mb-2"></h3>
+            <p id="modalDesc" class="opacity-90 text-sm"></p>
+        </div>
+    </div>
+
+    <footer class="py-12 px-4 bg-black/50 border-t border-white/10">
+        <div class="max-w-7xl mx-auto text-center">
+            <p>&amp;copy; 2024 NASA Space Explorer. All images courtesy of NASA.</p>
+        </div>
+    </footer>
+
+    <script src="js/particles.js"></script>
+    <script src="js/gallery.js"></script>
+    <script>
+        // Inline gallery logic for this page
+        class Gallery {
+            constructor() {
+                this.apiKey = 'DEMO_KEY';
+                this.currentType = 'demo';
+                this.init();
+            }
+
+            init() {
+                this.setupEventListeners();
+                this.loadDemoImages();
+            }
+
+            setupEventListeners() {
+                document.getElementById('apodBtn').addEventListener('click', () => this.loadAPOD());
+                document.getElementById('marsBtn').addEventListener('click', () => this.loadMars());
+                document.getElementById('hubbleBtn').addEventListener('click', () => this.loadHubble());
+                document.getElementById('closeModal').addEventListener('click', () => this.closeModal());
+                document.getElementById('imageModal').addEventListener('click', (e) => {
+                    if (e.target.id === 'imageModal') this.closeModal();
+                });
+            }
+
+            loadDemoImages() {
+                const demoImages = [
+                    {src: 'https://images.unsplash.com/photo-1446776811953-b23d57bd21aa?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2370&q=80', title: 'Nebula', desc: 'Stunning cosmic nebula captured by Hubble'},
+                    {src: 'https://images.unsplash.com/photo-1531247637639-02194b4a3403?ixlib=rb-4.0.3&auto=format&fit=crop&w=2371&q=80', title: 'Saturn', desc: 'Rings of Saturn'},
+                    {src: 'https://images.unsplash.com/photo-1570549717069-c68d3bd6feda?ixlib=rb-4.0.3&auto=format&fit=crop&w=2370&q=80', title: 'Mars Surface', desc: 'Martian landscape'},
+                    {src: 'https://images.unsplash.com/photo-1446776811953-b23d57bd21aa?ixlib=rb-4.0.3&auto=format&fit=crop&w=2370&q=80', title: 'Galaxy', desc: 'Spiral galaxy core'},
+                    {src: 'https://images.unsplash.com/photo-1419242902214-272b3f66ee7a?ixlib=rb-4.0.3&auto=format&fit=crop&w=2369&q=80', title: 'Earth from Space', desc: 'Blue marble Earth'},
+                ];
+                this.renderGrid(demoImages);
+            }
+
+            async loadAPOD() {
+                document.getElementById('galleryGrid').innerHTML = '<div class="col-span-full text-center py-20"><div class="loading mx-auto mb-4"></div><p class="text-xl">Loading APOD...</p></div>';
+                try {
+                    const response = await fetch(`https://api.nasa.gov/planetary/apod?count=12&api_key=${this.apiKey}`);
+                    const data = await response.json();
+                    const images = data.map(item => ({
+                        src: item.url || item.hdurl,
+                        title: item.title,
+                        desc: item.explanation?.substring(0, 100) + '...'
+                    })).filter(item => item.src);
+                    this.renderGrid(images);
+                } catch {
+                    this.loadDemoImages();
+                }
+            }
+
+            async loadMars() {
+                document.getElementById('galleryGrid').innerHTML = '<div class="col-span-full text-center py-20"><div class="loading mx-auto mb-4"></div><p class="text-xl">Loading Mars Rover photos...</p></div>';
+                try {
+                    const response = await fetch(`https://api.nasa.gov/mars-photos/api/v1/rovers/curiosity/photos?sol=1000&api_key=${this.apiKey}`);
+                    const data = await response.json();
+                    const images = data.photos.slice(0, 12).map(photo => ({
+                        src: photo.img_src,
+                        title: photo.camera.full_name,
+                        desc: `Sol ${photo.sol} - ${photo.earth_date}`
+                    }));
+                    this.renderGrid(images);
+                } catch {
+                    this.loadDemoImages();
+                }
+            }
+
+            loadHubble() {
+                // Hubble-like images
+                const hubbleImages = [
+                    {src: 'https://images.unsplash.com/photo-1462331940025-496dfbfc7564?ixlib=rb-4.0.3&w=1200', title: 'Pillars of Creation', desc: 'Eagle Nebula'},
+                    {src: 'https://images.unsplash.com/photo-1568617184105-5aa993f252a5?ixlib=rb-4.0.3&w=1200', title: 'Carina Nebula', desc: 'Mystic Mountain'},
+                    // Add more...
+                ];
+                this.renderGrid(hubbleImages);
+            }
+
+            renderGrid(images) {
+                const grid = document.getElementById('galleryGrid');
+                grid.innerHTML = images.map(img => `
+                    <div class="group mb-6 cursor-pointer overflow-hidden rounded-3xl shadow-2xl border border-white/10 hover:border-blue-400/50 bg-white/5 backdrop-blur-md" data-title="${img.title}" data-desc="${img.desc}">
+                        <img src="${img.src}" alt="${img.title}" class="w-full h-64 object-cover group-hover:scale-110 transition-transform duration-700" loading="lazy">
+                        <div class="p-6">
+                            <h4 class="font-bold text-lg mb-2 group-hover:text-blue-400 transition-colors">${img.title}</h4>
+                            <p class="text-sm opacity-75">${img.desc}</p>
+                        </div>
+                    </div>
+                `).join('');
+                
+                // Add click handlers
+                grid.querySelectorAll('[data-title]').forEach(el => {
+                    el.addEventListener('click', () => this.openModal(el.dataset.title, el.dataset.desc, el.querySelector('img').src));
+                });
+            }
+
+            openModal(title, desc, src) {
+                document.getElementById('modalTitle').textContent = title;
+                document.getElementById('modalDesc').textContent = desc;
+                document.getElementById('modalImage').src = src;
+                document.getElementById('imageModal').classList.remove('hidden');
+            }
+
+            closeModal() {
+                document.getElementById('imageModal').classList.add('hidden');
+            }
+        }
+
+        new Gallery();
+    </script>
+</body>
+</html>
