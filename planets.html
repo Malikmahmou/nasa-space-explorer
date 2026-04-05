@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Planets | NASA Space Explorer</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    animation: {
+                        'float': 'float 6s ease-in-out infinite',
+                        'pulse-glow': 'pulse-glow 2s ease-in-out infinite',
+                        'orbit': 'orbit 20s linear infinite',
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translate3d(0,0,0)' },
+                            '50%': { transform: 'translate3d(0,-20px,0)' },
+                        },
+                        'pulse-glow': {
+                            '0%, 100%': { boxShadow: '0 0 20px rgba(59, 130, 246, 0.5)' },
+                            '50%': { boxShadow: '0 0 40px rgba(59, 130, 246, 0.8)' },
+                        },
+                        orbit: {
+                            '0%': { transform: 'rotate(0deg) translateX(150px) rotate(0deg)' },
+                            '100%': { transform: 'rotate(360deg) translateX(150px) rotate(-360deg)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body class="bg-gradient-to-br from-black via-purple-900/50 to-blue-900/50 min-h-screen text-white font-sans overflow-x-hidden">
+
+    <!-- Navigation -->
+    <nav class="fixed top-0 w-full z-50 glass backdrop-blur-md border-b border-white/10">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex-shrink-0 font-bold text-2xl bg-gradient-to-r from-blue-400 to-purple-500 bg-clip-text text-transparent">
+                    <a href="index.html">NASA Explorer</a>
+                </div>
+                <div class="hidden md:flex space-x-8">
+                    <a href="index.html" class="text-blue-400 font-semibold">Home</a>
+                    <a href="planets.html" class="text-white hover:text-blue-400 font-semibold transition-all duration-300">Planets</a>
+                    <a href="missions.html" class="hover:text-blue-400 transition-all duration-300">Missions</a>
+                    <a href="gallery.html" class="hover:text-blue-400 transition-all duration-300">Gallery</a>
+                    <a href="about.html" class="hover:text-blue-400 transition-all duration-300">About</a>
+                </div>
+                <button id="darkToggle" class="p-2 rounded-lg bg-white/10 hover:bg-white/20 transition-all duration-300">
+                    <span class="dark:hidden">🌙</span>
+                    <span class="hidden dark:inline">☀️</span>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <canvas id="starsCanvas" class="fixed top-0 left-0 w-full h-full z-0 pointer-events-none"></canvas>
+
+    <!-- Hero Planets -->
+    <section class="relative min-h-screen flex items-center justify-center pt-16">
+        <div class="text-center max-w-4xl mx-auto px-4 z-10">
+            <h1 class="text-5xl md:text-7xl font-bold mb-6 bg-gradient-to-r from-orange-400 via-yellow-400 to-red-400 bg-clip-text text-transparent animate-float">
+                Our Solar System
+            </h1>
+            <p class="text-xl md:text-2xl mb-8 opacity-90 max-w-2xl mx-auto">
+                Journey through the eight planets, each with unique characteristics, moons, and mysteries waiting to be uncovered.
+            </p>
+        </div>
+    </section>
+
+    <!-- Planets Grid -->
+    <section class="py-24 px-4 max-w-7xl mx-auto">
+        <div class="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+            
+            <!-- Mercury -->
+            <div class="planet-card group relative bg-white/10 backdrop-blur-md rounded-3xl p-8 border border-white/20 hover:bg-white/20 transition-all duration-500 cursor-pointer shadow-xl hover:shadow-2xl hover:shadow-orange-500/30">
+                <div class="absolute -inset-2 bg-gradient-to-r from-orange-400 to-yellow-500 rounded-3xl blur opacity-20 group-hover:opacity-40 transition-opacity duration-500"></div>
+                <div class="relative">
+                    <div class="w-24 h-24 mx-auto mb-6 rounded-full bg-gradient-to-r from-gray-400 to-gray-300 group-hover:animate-orbit shadow-2xl border-4 border-white/50 flex items-center justify-center">
+                        <span class="text-3xl">☿</span>
+                    </div>
+                    <h3 class="text-2xl font-bold mb-4 text-center text-gray-100">Mercury</h3>
+                    <p class="opacity-90 mb-6">Closest to the Sun. Extreme temperatures.</p>
+                    <ul class="space-y-2 text-sm opacity-80 mb-6">
+                        <li><strong>Distance:</strong> 57.9M km</li>
+                        <li><strong>Diameter:</strong> 4,879 km</li>
+                        <li><strong>Moons:</strong> 0</li>
+                    </ul>
+                    <p class="text-xs opacity-70 italic">"The swiftest planet"</p>
+                </div>
+            </div>
+
+            <!-- Venus -->
+            <div class="planet-card group relative bg-white/10 backdrop-blur-md rounded-3xl p-8 border border-white/20 hover:bg-white/20 transition-all duration-500 cursor-pointer shadow-xl hover:shadow-2xl hover:shadow-yellow-500/30">
+                <div class="absolute -inset-2 bg-gradient-to-r from-yellow-400 to-orange-400 rounded-3xl blur opacity-20 group-hover:opacity-40 transition-opacity duration-500"></div>
+                <div class="relative">
+                    <div class="w-24 h-24 mx-auto mb-6 rounded-full bg-gradient-to-r from-yellow-400 to-orange-400 group-hover:animate-orbit shadow-2xl border-4 border-white/50 flex items-center justify-center">
+                        <span class="text-3xl">♀</span>
+                    </div>
+                    <h3 class="text-2xl font-bold mb-4 text-center">Venus</h3>
+                    <p class="opacity-90 mb-6">Hottest planet. Runs backwards!</p>
+                    <ul class="space-y-2 text-sm opacity-80 mb-6">
+                        <li><strong>Distance:</strong> 108.2M km</li>
+                        <li><strong>Diameter:</strong> 12,104 km</li>
+                        <li><strong>Moons:</strong> 0</li>
+                    </ul>
+                    <p class="text-xs opacity-70 italic">"Morning Star"</p>
+                </div>
+            </div>
+
+            <!-- Earth -->
+            <div class="planet-card group relative bg-white/10 backdrop-blur-md rounded-3xl p-8 border border-white/20 hover:bg-white/20 transition-all duration-500 cursor-pointer shadow-xl hover:shadow-2xl hover:shadow-blue-500/30">
+                <div class="absolute -inset-2 bg-gradient-to-r from-blue-400 to-green-400 rounded-3xl blur opacity-20 group-hover:opacity-40 transition-opacity duration-500"></div>
+                <div class="relative">
+                    <div class="w-24 h-24 mx-auto mb-6 rounded-full bg-gradient-to-r from-blue-400 via-green-400 to-blue-500 group-hover:animate-orbit shadow-2xl border-4 border-white/50 flex items-center justify-center relative overflow-hidden">
+                        <div class="absolute inset-0 bg-white/30 rounded-full animate-pulse"></div>
+                        <span class="text-3xl relative z-10">🌍</span>
+                    </div>
+                    <h3 class="text-2xl font-bold mb-4 text-center">Earth</h3>
+                    <p class="opacity-90 mb-6">Our home. Only known life-bearing planet.</p>
+                    <ul class="space-y-2 text-sm opacity-80 mb-6">
+                        <li><strong>Distance:</strong> 149.6M km</li>
+                        <li><strong>Diameter:</strong> 12,742 km</li>
+                        <li><strong>Moons:</strong> 1</li>
+                    </ul>
+                    <p class="text-xs opacity-70 italic">"Pale Blue Dot"</p>
+                </div>
+            </div>
+
+            <!-- Mars -->
+            <div class="planet-card group relative bg-white/10 backdrop-blur-md rounded-3xl p-8 border border-white/20 hover:bg-white/20 transition-all duration-500 cursor-pointer shadow-xl hover:shadow-2xl hover:shadow-red-500/30">
+                <div class="absolute -inset-2 bg-gradient-to-r from-red-400 to-orange-500 rounded-3xl blur opacity-20 group-hover:opacity-40 transition-opacity duration-500"></div>
+                <div class="relative">
+                    <div class="w-24 h-24 mx-auto mb-6 rounded-full bg-gradient-to-r from-red-500 to-orange-500 group-hover:animate-orbit shadow-2xl border-4 border-white/50 flex items-center justify-center">
+                        <span class="text-3xl">♂</span>
+                    </div>
+                    <h3 class="text-2xl font-bold mb-4 text-center">Mars</h3>
+                    <p class="opacity-90 mb-6">The Red Planet. Future human destination.</p>
+                    <ul class="space-y-2 text-sm opacity-80 mb-6">
+                        <li><strong>Distance:</strong> 227.9M km</li>
+                        <li><strong>Diameter:</strong> 6,779 km</li>
+                        <li><strong>Moons:</strong> 2</li>
+                    </ul>
+                    <p class="text-xs opacity-70 italic">"Red Frontier"</p>
+                </div>
+            </div>
+
+            <!-- Jupiter -->
+            <div class="planet-card group relative bg-white/10 backdrop-blur-md rounded-3xl p-8 border border-white/20 hover:bg-white/20 transition-all duration-500 cursor-pointer shadow-xl hover:shadow-2xl hover:shadow-orange-500/30">
+                <div class="absolute -inset-2 bg-gradient-to-r from-orange-400 to-yellow-500 rounded-3xl blur opacity-20 group-hover:opacity-40 transition-opacity duration-500"></div>
+                <div class="relative">
+                    <div class="w-24 h-24 mx-auto mb-6 rounded-full bg-gradient-to-br from-orange-400 via-yellow-300 to-red-400 group-hover:animate-orbit shadow-2xl border-4 border-white/50 flex items-center justify-center relative overflow-hidden">
+                        <div class="absolute -right-1 top-1/2 w-12 h-12 bg-white/20 rounded-full"></div>
+                        <span class="text-2xl relative z-10">🪐</span>
+                    </div>
+                    <h3 class="text-2xl font-bold mb-4 text-center">Jupiter</h3>
+                    <p class="opacity-90 mb-6">Largest planet. Great Red Spot storm.</p>
+                    <ul class="space-y-2 text-sm opacity-80 mb-6">
+                        <li><strong>Distance:</strong> 778.5M km</li>
+                        <li><strong>Diameter:</strong> 139,820 km</li>
+                        <li><strong>Moons:</strong> 95</li>
+                    </ul>
+                    <p class="text-xs opacity-70 italic">"King of Planets"</p>
+                </div>
+            </div>
+
+            <!-- Saturn -->
+            <div class="planet-card group relative bg-white/10 backdrop-blur-md rounded-3xl p-8 border border-white/20 hover:bg-white/20 transition-all duration-500 cursor-pointer shadow-xl hover:shadow-2xl hover:shadow-yellow-500/30">
+                <div class="absolute -inset-2 bg-gradient-to-r from-yellow-400 to-orange-400 rounded-3xl blur opacity-20 group-hover:opacity-40 transition-opacity duration-500"></div>
+                <div class="relative">
+                    <div class="w-24 h-24 mx-auto mb-6 rounded-full bg-gradient-to-r from-yellow-400 to-gold group-hover:animate-orbit shadow-2xl border-4 border-white/50 relative">
+                        <div class="absolute inset-0 rounded-full border-4 border-yellow-300/50 animate-pulse"></div>
+                        <span class="text-3xl relative z-10">🪐</span>
+                    </div>
+                    <h3 class="text-2xl font-bold mb-4 text-center">Saturn</h3>
+                    <p class="opacity-90 mb-6">Iconic rings. Least dense planet.</p>
+                    <ul class="space-y-2 text-sm opacity-80 mb-6">
+                        <li><strong>Distance:</strong> 1.43B km</li>
+                        <li><strong>Diameter:</strong> 116,460 km</li>
+                        <li><strong>Moons:</strong> 146</li>
+                    </ul>
+                    <p class="text-xs opacity-70 italic">"Ringed Wonder"</p>
+                </div>
+            </div>
+
+            <!-- Uranus -->
+            <div class="planet-card group relative bg-white/10 backdrop-blur-md rounded-3xl p-8 border border-white/20 hover:bg-white/20 transition-all duration-500 cursor-pointer shadow-xl hover:shadow-2xl hover:shadow-cyan-500/30">
+                <div class="absolute -inset-2 bg-gradient-to-r from-cyan-400 to-blue-400 rounded-3xl blur opacity-20 group-hover:opacity-40 transition-opacity duration-500"></div>
+                <div class="relative">
+                    <div class="w-24 h-24 mx-auto mb-6 rounded-full bg-gradient-to-r from-cyan-500 to-blue-500 group-hover:animate-orbit shadow-2xl border-4 border-white/50 flex items-center justify-center">
+                        <span class="text-3xl">⛢</span>
+                    </div>
+                    <h3 class="text-2xl font-bold mb-4 text-center">Uranus</h3>
+                    <p class="opacity-90 mb-6">Rolls on its side. Ice giant.</p>
+                    <ul class="space-y-2 text-sm opacity-80 mb-6">
+                        <li><strong>Distance:</strong> 2.87B km</li>
+                        <li><strong>Diameter:</strong> 51,118 km</li>
+                        <li><strong>Moons:</strong> 28</li>
+                    </ul>
+                    <p class="text-xs opacity-70 italic">"Tipped Planet"</p>
+                </div>
+            </div>
+
+            <!-- Neptune -->
+            <div class="planet-card group relative bg-white/10 backdrop-blur-md rounded-3xl p-8 border border-white/20 hover:bg-white/20 transition-all duration-500 cursor-pointer shadow-xl hover:shadow-2xl hover:shadow-blue-600/30">
+                <div class="absolute -inset-2 bg-gradient-to-r from-blue-500 to-indigo-500 rounded-3xl blur opacity-20 group-hover:opacity-40 transition-opacity duration-500"></div>
+                <div class="relative">
+                    <div class="w-24 h-24 mx-auto mb-6 rounded-full bg-gradient-to-r from-blue-600 to-indigo-600 group-hover:animate-orbit shadow-2xl border-4 border-white/50 flex items-center justify-center">
+                        <span class="text-3xl">♆</span>
+                    </div>
+                    <h3 class="text-2xl font-bold mb-4 text-center">Neptune</h3>
+                    <p class="opacity-90 mb-6">Windy ice giant. Farthest planet.</p>
+                    <ul class="space-y-2 text-sm opacity-80 mb-6">
+                        <li><strong>Distance:</strong> 4.5B km</li>
+                        <li><strong>Diameter:</strong> 49,528 km</li>
+                        <li><strong>Moons:</strong> 16</li>
+                    </ul>
+                    <p class="text-xs opacity-70 italic">"Blue Giant"</p>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="py-12 px-4 bg-black/50 border-t border-white/10">
+        <div class="max-w-7xl mx-auto text-center">
+            <p>&amp;copy; 2024 NASA Space Explorer. Explore responsibly.</p>
+        </div>
+    </footer>
+
+    <script src="js/particles.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>

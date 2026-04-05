@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About | NASA Space Explorer</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    animation: {
+                        'fade-in': 'fadeIn 1s ease-out',
+                        'slide-up': 'slideUp 0.8s ease-out',
+                    },
+                    keyframes: {
+                        fadeIn: {
+                            '0%': { opacity: 0, transform: 'translateY(30px)' },
+                            '100%': { opacity: 1, transform: 'translateY(0)' },
+                        },
+                        slideUp: {
+                            '0%': { transform: 'translateY(50px)', opacity: 0 },
+                            '100%': { transform: 'translateY(0)', opacity: 1 },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body class="bg-gradient-to-br from-black via-purple-900/50 to-blue-900/50 min-h-screen text-white font-sans overflow-x-hidden">
+
+    <nav class="fixed top-0 w-full z-50 glass backdrop-blur-md border-b border-white/10">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex-shrink-0 font-bold text-2xl bg-gradient-to-r from-blue-400 to-purple-500 bg-clip-text text-transparent">
+                    <a href="index.html">NASA Explorer</a>
+                </div>
+                <div class="hidden md:flex space-x-8">
+                    <a href="index.html" class="hover:text-blue-400 transition-all duration-300">Home</a>
+                    <a href="planets.html" class="hover:text-blue-400 transition-all duration-300">Planets</a>
+                    <a href="missions.html" class="hover:text-blue-400 transition-all duration-300">Missions</a>
+                    <a href="gallery.html" class="hover:text-blue-400 transition-all duration-300">Gallery</a>
+                    <a href="about.html" class="text-blue-400 font-semibold transition-all duration-300">About</a>
+                </div>
+                <button id="darkToggle" class="p-2 rounded-lg bg-white/10 hover:bg-white/20 transition-all duration-300">
+                    <span class="dark:hidden">🌙</span>
+                    <span class="hidden dark:inline">☀️</span>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <canvas id="starsCanvas" class="fixed top-0 left-0 w-full h-full z-0 pointer-events-none"></canvas>
+
+    <!-- Hero Section -->
+    <section class="relative min-h-screen flex items-center justify-center pt-16 text-center px-4">
+        <div class="max-w-4xl mx-auto animate-fade-in">
+            <h1 class="text-5xl md:text-7xl font-bold mb-8 bg-gradient-to-r from-indigo-400 via-purple-400 to-pink-400 bg-clip-text text-transparent">
+                About NASA Explorer
+            </h1>
+            <p class="text-xl md:text-2xl opacity-90 max-w-3xl mx-auto leading-relaxed">
+                A premium interactive showcase celebrating NASA's incredible achievements in space exploration,
+                planetary science, and cosmic discovery.
+            </p>
+        </div>
+    </section>
+
+    <!-- Stats Section -->
+    <section class="py-32 px-4">
+        <div class="max-w-6xl mx-auto grid md:grid-cols-4 gap-12 text-center">
+            <div class="animate-slide-up">
+                <div class="text-5xl font-bold bg-gradient-to-r from-blue-400 to-cyan-400 bg-clip-text text-transparent mb-4">
+                    400+
+                </div>
+                <p class="text-xl opacity-90">Human Spaceflights</p>
+            </div>
+            <div class="animate-slide-up animation-delay-200">
+                <div class="text-5xl font-bold bg-gradient-to-r from-emerald-400 to-teal-400 bg-clip-text text-transparent mb-4">
+                    18
+                </div>
+                <p class="text-xl opacity-90">People on Moon</p>
+            </div>
+            <div class="animate-slide-up animation-delay-400">
+                <div class="text-5xl font-bold bg-gradient-to-r from-orange-400 to-red-400 bg-clip-text text-transparent mb-4">
+                    270+
+                </div>
+                <p class="text-xl opacity-90">Missions to Mars</p>
+            </div>
+            <div class="animate-slide-up animation-delay-600">
+                <div class="text-5xl font-bold bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent mb-4">
+                    13B+
+                </div>
+                <p class="text-xl opacity-90">Light Years Observed</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- NASA Info Section -->
+    <section class="py-32 px-4 max-w-6xl mx-auto">
+        <div class="grid md:grid-cols-2 gap-16 items-center">
+            <div class="order-2 md:order-1 animate-slide-up">
+                <h2 class="text-4xl md:text-5xl font-bold mb-8 bg-gradient-to-r from-white to-gray-200 bg-clip-text">
+                    National Aeronautics and<br>
+                    <span class="bg-gradient-to-r from-blue-400 to-purple-500 bg-clip-text text-transparent">Space Administration</span>
+                </h2>
+                <div class="space-y-6 text-lg leading-relaxed">
+                    <p>Founded in 1958, NASA has been at the forefront of space exploration for over 65 years. From landing humans on the Moon to sending rovers to Mars, NASA's missions continue to expand our understanding of the universe.</p>
+                    <p>The <strong>Artemis program</strong> will return humans to the Moon by 2026, paving the way for Mars exploration. <strong>James Webb Space Telescope</strong> peers deeper into space than ever before.</p>
+                    <p><em>"We explore because we are human – and look at what we can do!"</em> — Bill Nye</p>
+                </div>
+            </div>
+            <div class="order-1 md:order-2 relative animate-slide-up animation-delay-300">
+                <div class="glass rounded-3xl p-12 border border-white/20 shadow-2xl backdrop-blur-xl relative overflow-hidden">
+                    <div class="absolute inset-0 bg-gradient-to-br from-blue-500/20 to-purple-500/20 animate-pulse"></div>
+                    <div class="relative z-10 space-y-8">
+                        <div class="flex items-center space-x-4 mb-8">
+                            <div class="w-20 h-20 bg-gradient-to-r from-blue-400 to-purple-500 rounded-2xl flex items-center justify-center shadow-2xl">
+                                <span class="text-2xl">🛰️</span>
+                            </div>
+                            <div>
+                                <h3 class="text-2xl font-bold">Live Data</h3>
+                                <p class="opacity-90">NASA APOD &amp; Mars Rover APIs</p>
+                            </div>
+                        </div>
+                        <div class="flex items-center space-x-4">
+                            <div class="w-20 h-20 bg-gradient-to-r from-emerald-400 to-teal-500 rounded-2xl flex items-center justify-center shadow-2xl">
+                                <span class="text-2xl">⚡</span>
+                            </div>
+                            <div>
+                                <h3 class="text-2xl font-bold">Performance</h3>
+                                <p class="opacity-90">Lazy loading, optimized animations</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Grid -->
+    <section class="py-32 px-4">
+        <div class="max-w-6xl mx-auto">
+            <h2 class="text-4xl md:text-5xl font-bold text-center mb-20 bg-gradient-to-r from-green-400 to-emerald-400 bg-clip-text text-transparent">
+                Production Ready Features
+            </h2>
+            <div class="grid md:grid-cols-3 gap-12">
+                <div class="text-center group animate-slide-up">
+                    <div class="w-24 h-24 mx-auto mb-8 rounded-3xl bg-gradient-to-r from-blue-500 to-cyan-500 group-hover:scale-110 transition-all duration-500 shadow-2xl border-4 border-white/30 flex items-center justify-center">
+                        <span class="text-3xl">🎨</span>
+                    </div>
+                    <h3 class="text-2xl font-bold mb-4">Modern Design</h3>
+                    <p class="opacity-90 max-w-md mx-auto">Glassmorphism UI, gradients, glow effects, responsive design</p>
+                </div>
+                <div class="text-center group animate-slide-up animation-delay-200">
+                    <div class="w-24 h-24 mx-auto mb-8 rounded-3xl bg-gradient-to-r from-purple-500 to-pink-500 group-hover:scale-110 transition-all duration-500 shadow-2xl border-4 border-white/30 flex items-center justify-center">
+                        <span class="text-3xl">✨</span>
+                    </div>
+                    <h3 class="text-2xl font-bold mb-4">Advanced Animations</h3>
+                    <p class="opacity-90 max-w-md mx-auto">Parallax scrolling, particle systems, hover effects, GSAP-ready</p>
+                </div>
+                <div class="text-center group animate-slide-up animation-delay-400">
+                    <div class="w-24 h-24 mx-auto mb-8 rounded-3xl bg-gradient-to-r from-emerald-500 to-teal-500 group-hover:scale-110 transition-all duration-500 shadow-2xl border-4 border-white/30 flex items-center justify-center">
+                        <span class="text-3xl">⚡</span>
+                    </div>
+                    <h3 class="text-2xl font-bold mb-4">Production Optimized</h3>
+                    <p class="opacity-90 max-w-md mx-auto">Tailwind CSS, NASA APIs, lazy loading, mobile-first, PWA ready</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="py-16 px-4 bg-black/60 border-t border-white/10">
+        <div class="max-w-6xl mx-auto text-center space-y-6">
+            <div class="text-2xl font-bold mb-4 bg-gradient-to-r from-white to-gray-300 bg-clip-text">
+                Ready for the Stars ✨
+            </div>
+            <p class="opacity-75">
+                Built with ❤️ for space enthusiasts. Replace DEMO_KEY with your NASA API key for full functionality.
+            </p>
+            <p class="text-sm opacity-50">
+                &amp;copy; 2024 NASA Space Explorer | Production-Ready Portfolio Project
+            </p>
+        </div>
+    </footer>
+
+    <script src="js/particles.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>
